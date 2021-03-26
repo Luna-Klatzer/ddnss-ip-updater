@@ -23,7 +23,7 @@ async def send_request(user, password, host):
             try:
                 requests.post(f"http://ddnss.de/upd.php?user={user}&pwd={password}&host={host}")
             except (requests.exceptions.ConnectionError, ConnectionError):
-                continue
+                await asyncio.sleep(5)
             except Exception:
                 raise
             else:
@@ -37,7 +37,19 @@ async def send_request(user, password, host):
 async def process_loop():
     print(f"Process started at {datetime.datetime.now()}")
     user, password, host = read_config()
-    ip = requests.get('https://api.ipify.org').text
+
+    ip = None
+    error = True
+    while error:
+        try:
+            ip = requests.get('https://api.ipify.org').text
+        except (requests.exceptions.ConnectionError, ConnectionError):
+            await asyncio.sleep(5)
+        except Exception:
+            raise
+        else:
+            error = False
+
     while True:
         new_ip = requests.get('https://api.ipify.org').text
         # ip is different and a request needs to be sent
