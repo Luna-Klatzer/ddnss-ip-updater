@@ -12,7 +12,24 @@ def read_config():
 
 
 def send_request(user, password, host):
-    requests.post(f"http://ddnss.de/upd.php?user={user}&pwd={password}&host={host}")
+    try:
+        requests.post(f"http://ddnss.de/upd.php?user={user}&pwd={password}&host={host}")
+    except ConnectionError:
+        print("No connection available! Waiting for connection")
+        await asyncio.sleep(20)
+
+        error = True
+        while error:
+            try:
+                requests.post(f"http://ddnss.de/upd.php?user={user}&pwd={password}&host={host}")
+            except Exception:
+                continue
+            else:
+                # It works again
+                error = False
+        return
+    except Exception:
+        raise
 
 
 async def process_loop():
