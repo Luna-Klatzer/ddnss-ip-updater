@@ -11,7 +11,7 @@ def read_config():
         return data['USER'], data['PASS'], data['HOST']
 
 
-def send_request(user, password, host):
+async def send_request(user, password, host):
     try:
         requests.post(f"http://ddnss.de/upd.php?user={user}&pwd={password}&host={host}")
     except (requests.exceptions.ConnectionError, ConnectionError):
@@ -42,7 +42,7 @@ async def process_loop():
         new_ip = requests.get('https://api.ipify.org').text
         # ip is different and a request needs to be sent
         if new_ip != ip:
-            send_request(user, password, host)
+            await send_request(user, password, host)
             print(f"Changed ip to {new_ip}")
             ip = new_ip
         print("IP does not require updating! Sleeping for 30s")
