@@ -1,0 +1,8 @@
+[Unit]
+Description=Updates the ip for the dynamic ip dns which points to the server
+After=syslog.target network.target
+[Service]
+ExecStart=/usr/share/ddnss-ip-updater/main.py
+Restart=on-abort
+[Install]
+WantedBy=multi-user.target
