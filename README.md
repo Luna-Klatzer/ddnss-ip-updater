@@ -10,7 +10,7 @@ Python Script used to automatically update the ip of a dynamic dns which points 
 The wanted path for the service is `/usr/share/ddnss-ip-updater`. The directory will require root permissions
 
 ### Configuring the file
-Add the configurations into the template-config.json file and rename/move config.json into the folder 
+Add the configurations into the `template-config.json` file, rename and then move `config.json` into the folder 
 `/usr/share/ddnss-ip-updater/`
 
 ```bash
