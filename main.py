@@ -5,7 +5,7 @@ import requests
 
 
 def read_config():
-    with open("./config.json") as config:
+    with open("/usr/share/ddnss-ip-updater/config.json") as config:
         data = json.loads(config.read())
         print(f"User: {data['USER']}\nPassword: {data['PASS']}\nHost: {data['HOST']}\n")
         return data['USER'], data['PASS'], data['HOST']
