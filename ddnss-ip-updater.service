@@ -1,9 +1,9 @@
 [Unit]
-Description=Updater for the dynamic ip dns pointing to the server
+Description=DDNSS-IP-Updater
 After=syslog.target network.target
 [Service]
 Type=simple
 ExecStart=python /usr/share/ddnss-ip-updater/main.py
-Restart=always
+Restart=on-abort
 [Install]
 WantedBy=multi-user.target
