@@ -62,6 +62,7 @@ async def main():
     ip_changer = DDNSSIPChanger()
     print(f"Process started at {datetime.datetime.now()}")
 
+    user, password, host, bot_token = read_config()
     while True:
         await ip_changer.run(user, password, host)
 
