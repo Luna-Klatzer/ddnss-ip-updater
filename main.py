@@ -19,7 +19,7 @@ def read_config():
 class DDNSSIPChanger:
     async def wait_for_connection(self):
         error = True
-        url = "http://www.kite.com"
+        url = "http://google.com"
         timeout = 5
         while error is True:
             try:
