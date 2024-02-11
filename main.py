@@ -3,9 +3,6 @@ import json
 import datetime
 import sys
 import traceback
-
-import discord
-import discord.ext.commands
 import requests
 
 
