@@ -63,32 +63,10 @@ class DDNSSIPChanger:
 
 async def main():
     ip_changer = DDNSSIPChanger()
-
     print(f"Process started at {datetime.datetime.now()}")
-    user, password, host, bot_token = read_config()
-
-    intents = discord.Intents.all()
-    client = discord.ext.commands.Bot(".", intents=intents)
 
     while True:
-        try:
-            await ip_changer.run(user, password, host)
-        except Exception as e:
-            exception = sys.exc_info()[0].__name__
-            tb = traceback.format_tb(sys.exc_info()[2])
-            tb_str = "".join(frame for frame in tb)
-
-            @client.event
-            async def on_ready():
-                guild = client.get_guild(702222354037735476)
-                await guild.get_member(376406094639267862).send(
-                    f"Failed due to exception: ```py\n{tb_str}\n{exception}: {e}\n```"
-                )
-                await client.close()
-
-            await client.login(token=bot_token)
-            await client.connect(reconnect=True)
-            await asyncio.sleep(10)
+        await ip_changer.run(user, password, host)
 
 
 if __name__ == '__main__':
