@@ -10,7 +10,7 @@ def read_config():
     with open("/usr/share/ddnss-ip-updater/config.json") as config:
         data = json.loads(config.read())
         print(f"User: {data['USER']}\nPassword: {data['PASS']}\nHost: {data['HOST']}\n")
-        return data['USER'], data['PASS'], data['HOST'], data['TOKEN']
+        return data['USER'], data['PASS'], data['HOST']
 
 
 class DDNSSIPChanger:
@@ -62,7 +62,7 @@ async def main():
     ip_changer = DDNSSIPChanger()
     print(f"Process started at {datetime.datetime.now()}")
 
-    user, password, host, bot_token = read_config()
+    user, password, host = read_config()
     while True:
         await ip_changer.run(user, password, host)
 
