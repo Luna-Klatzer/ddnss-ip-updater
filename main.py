@@ -32,7 +32,7 @@ class DDNSSIPChanger:
                 error = False
         log("Connection reestablished")
 
-    async def get_curr_ip():
+    async def get_curr_ip(self):
         return requests.get('https://api.ipify.org').text
 
     async def update_ip(self, user, password, host):
