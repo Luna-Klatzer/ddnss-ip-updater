@@ -32,21 +32,29 @@ class DDNSSIPChanger:
                 error = False
         log("Connection reestablished")
 
+    async def get_curr_ip():
+        return requests.get('https://api.ipify.org').text
+
     async def update_ip(self, user, password, host):
         # Waits until a connection is possible
         log("Updating ip in DNS record")
+
+        ip = self.get_curr_ip()
         await self.wait_for_connection()
-        requests.post(f"https://ddnss.de//upd.php?user={user}&pwd={password}&host={host}")
+        requests.post(f"https://ddnss.de//upd.php?user={user}&pwd={password}&host={host}&ip={ip}")
+
         log(f"Changed ip to {new_ip}")
 
     async def run(self, user, password, host):
-        # On Start it will automatically update the ip
+        ip = self.get_curr_ip()
+        log(f"Starting with ip {ip}")
+
+        # On start it will automatically update the ip
         await self.update_ip(user, password, host)
 
-        ip = requests.get('https://api.ipify.org').text
         while True:
             try:
-                new_ip = requests.get('https://api.ipify.org').text
+                new_ip = self.get_curr_ip()
 
                 # ip is different and a request needs to be sent
                 if new_ip != ip:
